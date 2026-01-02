@@ -1,0 +1,22 @@
+body{
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.canvas-container{
+    background-color: #000;
+}
+
+canvas{
+    background-color: whitesmoke;
+}
+
+.editor{
+    background-color:aquamarine;
+}
+
+.grid-container{
+    display: grid;
+    gap: 5px;
+    grid-template-columns: 1fr 1fr;
+}
