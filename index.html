@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meme Gen 3</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/media.css">
 </head>
 
 <body onload="onInit()">
@@ -32,9 +33,22 @@
                 <canvas width="400" height="400"></canvas>
             </div>
 
-            <div class="controls">
+            <div class="controls ">
+
                 <label for="txt">Text:</label>
                 <input type="text" id="txt" oninput="onSetLineText(this.value)">
+
+                <label for="color">Color:</label>
+                <input type="color" oninput="onSetColor(this.value)">
+
+                <label for="font-size">Font Size:</label>
+                <div id="font-size">
+                    <button onclick="onChangeSize(1)">↑</button>
+                    <button onclick="onChangeSize(-1)">↓</button>
+                </div>
+                <!-- <label for="dwn-btn">Download:</label> -->
+                <!-- <button id="dwn-btn">Click here!</button> -->
+                <a href="#" id="dwn-link" onclick="onDownloadImg(this)" download="file-name">Download Meme</a>
             </div>
         </section>
     </main>

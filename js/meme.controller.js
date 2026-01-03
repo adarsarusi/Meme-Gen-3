@@ -12,7 +12,7 @@ function onInit() {
 }
 
 function renderMeme() {
-    
+
     const meme = gMeme
     const img = getImgById(meme.selectedImgId)
 
@@ -31,10 +31,10 @@ function renderMeme() {
 
         gElCanvas.height = (image.naturalHeight / image.naturalWidth) * gElCanvas.width
         gCtx.drawImage(image, 0, 0, gElCanvas.width, gElCanvas.height)
-
+        
         // Draw text line (top)
         const line = meme.lines[meme.selectedLineIdx]
-
+        
         drawTextLine(line, gElCanvas.width / 2, line.size)
     }
 }
@@ -67,3 +67,19 @@ function onSetLineText(txt) {
     renderMeme()
 }
 
+function onDownloadImg(elLink) {
+    var imgContent = gElCanvas.toDataURL();
+    elLink.href = imgContent
+
+    elLink.download = 'my-meme'
+}
+
+function onSetColor(color) {
+    setColor(color)
+    renderMeme()
+}
+
+function onChangeSize(size){
+    changeSize(size)
+    renderMeme()
+}

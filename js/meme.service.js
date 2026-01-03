@@ -28,6 +28,14 @@ function setLineText(txt) {
     gMeme.lines[gMeme.selectedLineIdx].txt = txt
 }
 
+function setColor(color){
+    gMeme.lines[gMeme.selectedLineIdx].color = color
+}
+
+function changeSize(size){
+    gMeme.lines[gMeme.selectedLineIdx].size += size
+}
+
 function getGallery() {
     return gImgs
 }
