@@ -6,13 +6,13 @@ var gCtx
 function onInit() {
     gElCanvas = document.querySelector('canvas')
     gCtx = gElCanvas.getContext('2d')
-    renderMeme()
-
+    renderGallery()
+    openGallery()
     window.addEventListener('resize', () => resizeCanvas())
 }
 
 function renderMeme() {
-
+    
     const meme = gMeme
     const img = getImgById(meme.selectedImgId)
 
@@ -37,14 +37,11 @@ function renderMeme() {
 
         drawTextLine(line, gElCanvas.width / 2, line.size)
     }
-
-
-    console.log('hello')
 }
 
-function renderImg(img) {
-    gElCanvas.height = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
-    gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+function openEditor() {
+    document.querySelector('.gallery').classList.add('hidden')
+    document.querySelector('.editor').classList.remove('hidden')
 }
 
 function drawTextLine(line, x, y) {
@@ -59,8 +56,14 @@ function drawTextLine(line, x, y) {
 }
 
 function resizeCanvas() {
-  const elContainer = document.querySelector('.canvas-container')
-  gElCanvas.width = elContainer.clientWidth
+    const elContainer = document.querySelector('.canvas-container')
+    gElCanvas.width = elContainer.clientWidth
 
-      renderMeme()
+    renderMeme()
 }
+
+function onSetLineText(txt) {
+    setLineText(txt)
+    renderMeme()
+}
+

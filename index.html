@@ -9,20 +9,40 @@
 </head>
 
 <body onload="onInit()">
-    <header>
+    <header class="flex space-around">
         <h2 class="logo">Meme Gen 3</h2>
+        <nav class="nav-bar">
+            <ul class="clean-list flex">
+                <li onclick="openGallery()">Gallery</li>
+                <li>Memes</li>
+                <li>About</li>
+            </ul>
+        </nav>
     </header>
 
     <main class="grid-container">
-        <div class="canvas-container">
-            <canvas width="400" height="400"></canvas>
-        </div>
-        <div class="editor"></div>
+
+        <section class="gallery">
+            <div class="gallery-container"></div>
+        </section>
+
+
+        <section class="editor hidden">
+            <div class="canvas-container">
+                <canvas width="400" height="400"></canvas>
+            </div>
+
+            <div class="controls">
+                <label for="txt">Text:</label>
+                <input type="text" id="txt" oninput="onSetLineText(this.value)">
+            </div>
+        </section>
     </main>
 
     <script src="js/util.service.js"></script>
     <script src="js/meme.service.js"></script>
     <script src="js/meme.controller.js"></script>
+    <script src="js/gallery.controller.js"></script>
 </body>
 
 </html>
