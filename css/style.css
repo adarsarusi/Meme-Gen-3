@@ -9,6 +9,7 @@ body{
 
 canvas{
     background-color: whitesmoke;
+    width: 55vw;
 }
 
 .editor{

@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meme Gen 3</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+
+<body onload="onInit()">
     <header>
         <h2 class="logo">Meme Gen 3</h2>
     </header>
 
-<main class="grid-container">
-    <div class="canvas-container">
-        <canvas width="400" height="400"></canvas>
-    </div>
-    <div class="editor"></div>
-</main>
+    <main class="grid-container">
+        <div class="canvas-container">
+            <canvas width="400" height="400"></canvas>
+        </div>
+        <div class="editor"></div>
+    </main>
+
+    <script src="js/util.service.js"></script>
     <script src="js/meme.service.js"></script>
     <script src="js/meme.controller.js"></script>
 </body>
+
 </html>
