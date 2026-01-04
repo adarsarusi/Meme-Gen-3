@@ -10,49 +10,50 @@
 </head>
 
 <body onload="onInit()">
-    <header class="flex space-around">
-        <h2 class="logo">Meme Gen 3</h2>
-        <nav class="nav-bar">
-            <ul class="clean-list flex">
-                <li onclick="openGallery()">Gallery</li>
-                <li>Memes</li>
-                <li>About</li>
-            </ul>
-        </nav>
-    </header>
+    <div class="main-layout">
+        <header class="flex space-around full">
+            <h2 class="logo">Meme Gen 3</h2>
+            <nav class="nav-bar">
+                <ul class="clean-list flex">
+                    <li onclick="openGallery()">Gallery</li>
+                    <li>Memes</li>
+                    <li>About</li>
+                </ul>
+            </nav>
+        </header>
 
-    <main class="grid-container">
+        <main class="grid-container">
 
-        <section class="gallery">
-            <div class="gallery-container"></div>
-        </section>
+            <section class="gallery">
+                <div class="gallery-container"></div>
+            </section>
 
 
-        <section class="editor hidden">
-            <div class="canvas-container">
-                <canvas width="400" height="400"></canvas>
-            </div>
-
-            <div class="controls ">
-
-                <label for="txt">Text:</label>
-                <input type="text" id="txt" oninput="onSetLineText(this.value)">
-
-                <label for="color">Color:</label>
-                <input type="color" oninput="onSetColor(this.value)">
-
-                <label for="font-size">Font Size:</label>
-                <div id="font-size">
-                    <button onclick="onChangeSize(1)">↑</button>
-                    <button onclick="onChangeSize(-1)">↓</button>
+            <section class="editor hidden">
+                <div class="canvas-container">
+                    <canvas width="400" height="400"></canvas>
                 </div>
-                <!-- <label for="dwn-btn">Download:</label> -->
-                <!-- <button id="dwn-btn">Click here!</button> -->
-                <a href="#" id="dwn-link" onclick="onDownloadImg(this)" download="file-name">Download Meme</a>
-            </div>
-        </section>
-    </main>
 
+                <div class="controls ">
+
+                    <label for="txt">Text:</label>
+                    <input type="text" id="txt" oninput="onSetLineText(this.value)">
+
+                    <label for="color">Color:</label>
+                    <input type="color" oninput="onSetColor(this.value)">
+
+                    <label for="font-size">Font Size:</label>
+                    <div id="font-size">
+                        <button onclick="onChangeSize(1)">↑</button>
+                        <button onclick="onChangeSize(-1)">↓</button>
+                    </div>
+                    <!-- <label for="dwn-btn">Download:</label> -->
+                    <!-- <button id="dwn-btn">Click here!</button> -->
+                    <a href="#" id="dwn-link" onclick="onDownloadImg(this)" download="file-name">Download Meme</a>
+                </div>
+            </section>
+        </main>
+    </div>
     <script src="js/util.service.js"></script>
     <script src="js/meme.service.js"></script>
     <script src="js/meme.controller.js"></script>

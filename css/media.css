@@ -1,5 +1,23 @@
-/* @media (max-width: 600px) {
+@media (max-width: 600px) {
+
+    .main-layout {
+        grid-template-columns: minmax(16px, 1fr) minmax(auto, 600px) minmax(16px, 1fr);
+    }
+
     .controls {
         grid-template-columns: 1fr;
     }
-} */
+
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+
+    canvas {
+        width: 100%;
+    }
+
+    .gallery-img {
+        width: 150px;
+        height: 150px;
+    }
+}

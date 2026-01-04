@@ -1,3 +1,18 @@
+.main-layout {
+    display: grid;
+    grid-template-columns: minmax(16px, 1fr) minmax(auto, 980px) minmax(16px, 1fr);
+
+    >* {
+        &:not(.full) {
+            grid-column: 2;
+        }
+
+        &.full {
+            grid-column: 1 / -1;
+        }
+    }
+}
+
 body {
     text-align: center;
     font-family: sans-serif;
@@ -65,7 +80,7 @@ canvas {
     display: grid;
     grid-template-columns: 100px 1fr;
     /* gap: 12px 16px; */
-    align-items: center;
+    place-items: center;
 
     > #dwn-link{
         grid-column: 1 / -1;
