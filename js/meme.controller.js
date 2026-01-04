@@ -11,7 +11,7 @@ function onInit() {
     window.addEventListener('resize', () => resizeCanvas())
 }
 
-function renderMeme() {
+function renderMeme(isExport = false) {
 
     const meme = gMeme
     const img = getImgById(meme.selectedImgId)
@@ -33,9 +33,10 @@ function renderMeme() {
         meme.lines.forEach((line, idx) => {
             const x = line.pos.x || gElCanvas.width / 2
             const y = line.pos.y
-            
-            
-            const isSelected = idx === meme.selectedLineIdx
+
+
+            const isSelected =
+                !isExport && idx === meme.selectedLineIdx
             drawTextLine(line, gElCanvas.width / 2, y, isSelected)
         })
 
@@ -82,12 +83,40 @@ function onSwitchLine() {
     renderMeme()
 }
 
-function onDownloadImg(elLink) {
-    var imgContent = gElCanvas.toDataURL();
-    elLink.href = imgContent
+function onDownloadImg() {
+    renderMeme(true)
 
-    elLink.download = 'my-meme'
+    setTimeout(() => {
+        const imgContent = gElCanvas.toDataURL('image/png')
+
+        const link = document.createElement('a')
+        link.href = imgContent
+        link.download = 'my-meme.png'
+
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+
+        renderMeme() 
+    }, 50)
 }
+
+// function onDownloadImg(elLink) {
+
+//     renderMeme(true)
+
+//     var imgContent = gElCanvas.toDataURL('image/png');
+
+//     setTimeout(() => {
+//         elLink.href = imgContent
+//     }, 0)
+
+
+    
+//     // elLink.href = imgContent
+
+//     elLink.download = 'my-meme'
+// }
 
 function onSetColor(color) {
     setColor(color)
