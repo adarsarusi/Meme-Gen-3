@@ -10,7 +10,15 @@ var gMeme = {
             txt: 'I sometimes eat Falafel'
             ,
             size: 30,
-            color: 'white'
+            color: 'white',
+            pos: { x: null, y: 40}
+        },
+        {
+            txt: 'Even for breakfest'
+            ,
+            size: 30,
+            color: 'white',
+            pos: { x: null, y: null}
         }
     ]
 }
@@ -42,4 +50,33 @@ function getGallery() {
 
 function setImg(id){
     gMeme.selectedImgId = +id
+}
+
+function addLine(){
+    const y = getDefaultLineY(gMeme.lines.length)
+
+    gMeme.lines.push({
+        txt: 'New Line',
+        size: 30,
+        color: 'white',
+        pos: {x: null, y}
+    })
+
+    gMeme.selectedLineIdx = gMeme.lines.length - 1
+}
+
+function switchLine(){
+    if (gMeme.selectedLineIdx === gMeme.lines.length - 1) return gMeme.selectedLineIdx = 0
+
+    return gMeme.selectedLineIdx++
+}
+
+function getDefaultLineY(lineCount){
+    const margin = 40
+    const spacing = 40
+
+    if (lineCount === 0) return margin
+    if (lineCount === 1) return gElCanvas.height - margin
+
+    return margin + spacing * lineCount
 }

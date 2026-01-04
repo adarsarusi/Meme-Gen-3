@@ -26,6 +26,10 @@ header {
 
 .nav-bar ul {
     gap: 20px;
+    
+    >li{
+        cursor: pointer;
+    }
 }
 
 .canvas-container {
@@ -83,6 +87,10 @@ canvas {
     place-items: center;
 
     > #dwn-link{
+        grid-column: 1 / -1;
+    }
+
+    > .line-btns{
         grid-column: 1 / -1;
     }
 }

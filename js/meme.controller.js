@@ -22,20 +22,23 @@ function renderMeme() {
     image.src = img.url
 
     image.onload = () => {
-        // Resize canvas to image size
-        // gElCanvas.width = image.width
-        // gElCanvas.height = image.height
 
         // Draw image
-        // gCtx.drawImage(image, 0, 0, gElCanvas.width, gElCanvas.height)
-
         gElCanvas.height = (image.naturalHeight / image.naturalWidth) * gElCanvas.width
         gCtx.drawImage(image, 0, 0, gElCanvas.width, gElCanvas.height)
-        
-        // Draw text line (top)
-        const line = meme.lines[meme.selectedLineIdx]
-        
-        drawTextLine(line, gElCanvas.width / 2, line.size)
+
+        adjustDefaultLinePosistions()
+
+        // Draw Lines
+        meme.lines.forEach((line, idx) => {
+            const x = line.pos.x || gElCanvas.width / 2
+            const y = line.pos.y
+            
+            
+            const isSelected = idx === meme.selectedLineIdx
+            drawTextLine(line, gElCanvas.width / 2, y, isSelected)
+        })
+
     }
 }
 
@@ -44,7 +47,7 @@ function openEditor() {
     document.querySelector('.editor').classList.remove('hidden')
 }
 
-function drawTextLine(line, x, y) {
+function drawTextLine(line, x, y, isSelected) {
     gCtx.font = `${line.size}px Impact`
     gCtx.fillStyle = line.color
     gCtx.strokeStyle = 'black'
@@ -53,6 +56,8 @@ function drawTextLine(line, x, y) {
 
     gCtx.fillText(line.txt, x, y)
     gCtx.strokeText(line.txt, x, y)
+
+    if (isSelected) drawSelectionFrame(line, x, y)
 }
 
 function resizeCanvas() {
@@ -64,6 +69,16 @@ function resizeCanvas() {
 
 function onSetLineText(txt) {
     setLineText(txt)
+    renderMeme()
+}
+
+function onAddLine() {
+    addLine()
+    renderMeme()
+}
+
+function onSwitchLine() {
+    switchLine()
     renderMeme()
 }
 
@@ -79,7 +94,29 @@ function onSetColor(color) {
     renderMeme()
 }
 
-function onChangeSize(size){
+function onChangeSize(size) {
     changeSize(size)
     renderMeme()
+}
+
+function adjustDefaultLinePosistions() {
+    gMeme.lines[1].pos.y = gElCanvas.height - 20
+}
+
+function drawSelectionFrame(line, x, y) {
+    const metrics = gCtx.measureText(line.txt)
+    const textWidth = metrics.width
+    const textHeight = line.size
+
+    const padding = 6
+
+    gCtx.strokeStyle = 'white'
+    gCtx.lineWidth = 1
+
+    gCtx.strokeRect(
+        x - textWidth / 2 - padding,
+        y - textHeight - padding,
+        textWidth + padding * 2,
+        textHeight + padding * 2
+    )
 }
