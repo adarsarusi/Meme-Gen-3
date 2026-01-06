@@ -3,15 +3,19 @@
 var gElCanvas
 var gCtx
 
+var isFirstDraw = true
+
 function onInit() {
     gElCanvas = document.querySelector('canvas')
     gCtx = gElCanvas.getContext('2d')
     renderGallery()
     openGallery()
-    window.addEventListener('resize', () => resizeCanvas())
+    window.addEventListener('resize', () => renderMeme())
+    gElCanvas.addEventListener('click', onCanvasClick)
 }
 
 function renderMeme(isExport = false) {
+    resizeCanvas()
 
     const meme = gMeme
     const img = getImgById(meme.selectedImgId)
@@ -27,17 +31,20 @@ function renderMeme(isExport = false) {
         gElCanvas.height = (image.naturalHeight / image.naturalWidth) * gElCanvas.width
         gCtx.drawImage(image, 0, 0, gElCanvas.width, gElCanvas.height)
 
-        adjustDefaultLinePosistions()
-
-        // Draw Lines
+        // Draw and store line position
         meme.lines.forEach((line, idx) => {
-            const x = line.pos.x || gElCanvas.width / 2
-            const y = line.pos.y
+            if (!line.pos) line.pos = {}
 
+            // set defaults once
+            if (line.pos.xRatio == null) line.pos.xRatio = 0.5
+            if (line.pos.yRatio == null)
+                line.pos.yRatio = getDefaultLineYRatio(idx)
 
-            const isSelected =
-                !isExport && idx === meme.selectedLineIdx
-            drawTextLine(line, gElCanvas.width / 2, y, isSelected)
+            const x = line.pos.xRatio * gElCanvas.width
+            const y = line.pos.yRatio * gElCanvas.height
+
+            const isSelected = !isExport && idx === meme.selectedLineIdx
+            drawTextLine(line, x, y, isSelected)
         })
 
     }
@@ -46,10 +53,12 @@ function renderMeme(isExport = false) {
 function openEditor() {
     document.querySelector('.gallery').classList.add('hidden')
     document.querySelector('.editor').classList.remove('hidden')
+
+    resetMeme()
 }
 
 function drawTextLine(line, x, y, isSelected) {
-    gCtx.font = `${line.size}px Impact`
+    gCtx.font = `${line.size}px ${line.font}`
     gCtx.fillStyle = line.color
     gCtx.strokeStyle = 'black'
     gCtx.lineWidth = 2
@@ -63,9 +72,7 @@ function drawTextLine(line, x, y, isSelected) {
 
 function resizeCanvas() {
     const elContainer = document.querySelector('.canvas-container')
-    gElCanvas.width = elContainer.clientWidth
-
-    renderMeme()
+    gElCanvas.width = elContainer.offsetWidth
 }
 
 function onSetLineText(txt) {
@@ -78,8 +85,28 @@ function onAddLine() {
     renderMeme()
 }
 
+function onDeleteLine(){
+    deleteLine()
+    renderMeme()
+}
+
 function onSwitchLine() {
     switchLine()
+    renderMeme()
+}
+
+function onAlignLeft(){
+    alignLeft()
+    renderMeme()
+}
+
+function onAlignCenter(){
+    alignCenter()
+    renderMeme()
+}
+
+function onAlignRight(){
+    alignRight()
     renderMeme()
 }
 
@@ -97,26 +124,9 @@ function onDownloadImg() {
         link.click()
         document.body.removeChild(link)
 
-        renderMeme() 
+        renderMeme()
     }, 50)
 }
-
-// function onDownloadImg(elLink) {
-
-//     renderMeme(true)
-
-//     var imgContent = gElCanvas.toDataURL('image/png');
-
-//     setTimeout(() => {
-//         elLink.href = imgContent
-//     }, 0)
-
-
-    
-//     // elLink.href = imgContent
-
-//     elLink.download = 'my-meme'
-// }
 
 function onSetColor(color) {
     setColor(color)
@@ -128,8 +138,9 @@ function onChangeSize(size) {
     renderMeme()
 }
 
-function adjustDefaultLinePosistions() {
-    gMeme.lines[1].pos.y = gElCanvas.height - 20
+function onChangeFont(font){
+    changeFont(font)
+    renderMeme()
 }
 
 function drawSelectionFrame(line, x, y) {
@@ -148,4 +159,43 @@ function drawSelectionFrame(line, x, y) {
         textWidth + padding * 2,
         textHeight + padding * 2
     )
+}
+
+function onCanvasClick(ev) {
+    const { offsetX, offsetY } = ev
+
+    const clickedLineIdx = getClickedLineIdx(offsetX, offsetY)
+    if (clickedLineIdx === -1) return
+
+    gMeme.selectedLineIdx = clickedLineIdx
+    renderMeme()
+}
+
+function getClickedLineIdx(x, y) {
+    for (let i = gMeme.lines.length - 1; i >= 0; i--) {
+        const line = gMeme.lines[i]
+
+        gCtx.font = `${line.size}px Impact`
+        const textWidth = gCtx.measureText(line.txt).width
+        const textHeight = line.size
+        const padding = 6
+
+        const lineX = line.pos.xRatio * gElCanvas.width
+        const lineY = line.pos.yRatio * gElCanvas.height
+
+        const left   = lineX - textWidth / 2 - padding
+        const right  = lineX + textWidth / 2 + padding
+        const top    = lineY - textHeight - padding
+        const bottom = lineY + padding
+
+        if (
+            x >= left &&
+            x <= right &&
+            y >= top &&
+            y <= bottom
+        ) {
+            return i
+        }
+    }
+    return -1
 }

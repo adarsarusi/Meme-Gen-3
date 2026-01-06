@@ -1,6 +1,6 @@
 .main-layout {
     display: grid;
-    grid-template-columns: minmax(16px, 1fr) minmax(auto, 980px) minmax(16px, 1fr);
+    grid-template-columns: minmax(16px, 1fr) minmax(auto, 1050px) minmax(16px, 1fr);
 
     >* {
         &:not(.full) {
@@ -74,7 +74,7 @@ canvas {
 }
 
 .controls {
-    background-color: #46eeeb;
+    background-color: #b2e9fa;
 
     border-radius: 8px;
     border: 1px solid rgb(0, 0, 0);
@@ -92,6 +92,29 @@ canvas {
 
     > .line-btns{
         grid-column: 1 / -1;
+    }
+}
+
+button{
+    padding: 8px;
+    border-radius: 8px;
+    border-color: #121530;
+    background-color: #91e5ff;
+    font-weight: bold;
+}
+
+.line-btns{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+#font-size{
+    width: 100%;
+
+    >button{
+        width: 40px;
+        font-weight: 100;
     }
 }
 

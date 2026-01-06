@@ -38,7 +38,21 @@
                     <div class="line-btns">
                         <button onclick="onAddLine()">Add Line</button>
                         <button onclick="onSwitchLine()">Switch Line</button>
+                        <button onclick="onDeleteLine()">Delete Line</button>
                     </div>
+                    <div class="line-btns">
+                        <button onclick="onAlignLeft()">Align Left</button>
+                        <button onclick="onAlignCenter()">Align Center</button>
+                        <button onclick="onAlignRight()">Align Right</button>
+                    </div>
+
+                    <label for="font-family">Font Family:</label>
+                    <select name="font-family" id="font-family" onchange="onChangeFont(this.value)">
+                        <option value="Impact" selected>Impact</option>
+                        <option value="Arial" >Arial</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                    </select>
+
                     <label for="txt">Text:</label>
                     <input type="text" id="txt" oninput="onSetLineText(this.value)">
 
@@ -47,8 +61,8 @@
 
                     <label for="font-size">Font Size:</label>
                     <div id="font-size">
-                        <button onclick="onChangeSize(1)">↑</button>
-                        <button onclick="onChangeSize(-1)">↓</button>
+                        <button onclick="onChangeSize(1)">▲</button>
+                        <button onclick="onChangeSize(-1)">▼</button>
                     </div>
                     <!-- <label for="dwn-btn">Download:</label> -->
                     <!-- <button id="dwn-btn">Click here!</button> -->
